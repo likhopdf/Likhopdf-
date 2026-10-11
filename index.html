@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LikhoPDF - Handwritten Notes</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f7f9fc;color:#15191e}
+header{background:white;padding:20px;text-align:center;border-bottom:1px solid #ddd}
+.logo{font-size:32px;font-weight:800}
+.logo span{color:#0866ff}
+header p{margin:8px 0;color:#444}
+main{max-width:800px;margin:25px auto;padding:16px}
+.card{background:white;padding:20px;border-radius:16px;border:1px solid #ddd;margin-bottom:20px}
+h2{margin-top:0}
+label{display:block;font-weight:bold;margin:14px 0 7px}
+textarea,select,input{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:9px;font-size:16px}
+textarea{min-height:180px;resize:vertical}
+button{background:#0866ff;color:white;border:0;border-radius:9px;padding:13px 17px;font-size:16px;font-weight:bold;margin-top:15px;cursor:pointer}
+button.secondary{background:#171b22}
+#paper{background:#fffdf7;border:1px solid #ddd;min-height:300px;padding:25px;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.9;font-family:"Comic Sans MS",cursive;font-size:19px;color:#172b75}
+.note{font-size:13px;color:#555;line-height:1.5}
+footer{text-align:center;padding:25px;color:#555}
+@media print{
+body{background:white}
+header,main .editor,main .controls,footer{display:none!important}
+main{margin:0;padding:0}
+.card{border:0;padding:0}
+#paper{border:0;min-height:auto}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">Likho<span>PDF</span></div>
+  <p>Text Se Handwritten Notes!</p>
+</header>
+
+<main>
+  <section class="card editor">
+    <h2>✍️ Handwritten Notes Maker</h2>
+    <label for="noteText">Apna text yahan likho ya paste karo</label>
+    <textarea id="noteText" placeholder="Yahan apne notes likho..."></textarea>
+
+    <label for="style">Writing Style</label>
+    <select id="style">
+      <option value="Comic Sans MS, cursive">Handwriting Style 1</option>
+      <option value="cursive">Handwriting Style 2</option>
+      <option value="Georgia, serif">Book Style</option>
+    </select>
+
+    <label for="ink">Ink Colour</label>
+    <select id="ink">
+      <option value="#172b75">Blue</option>
+      <option value="#171717">Black</option>
+      <option value="#b00020">Red</option>
+    </select>
+
+    <button onclick="makeNotes()">Create Handwritten Notes</button>
+    <p class="note">Note: Handwriting ka look device ke available fonts par depend karega.</p>
+  </section>
+
+  <section class="card">
+    <h2>📄 Notes Preview</h2>
+    <div id="paper">Tumhare handwritten notes yahan dikhai denge...</div>
+    <div class="controls">
+      <button onclick="savePDF()">Download / Save PDF</button>
+      <button class="secondary" onclick="clearNotes()">Clear Text</button>
+    </div>
+    <p class="note">PDF save karne ke liye print screen mein “Save as PDF” chuno.</p>
+  </section>
+</main>
+
+<footer>© 2026 LikhoPDF · Simple Notes, Easy Learning</footer>
+
+<script>
+function makeNotes(){
+  const text=document.getElementById("noteText").value.trim();
+  const paper=document.getElementById("paper");
+  if(!text){
+    alert("Pehle apna text likho!");
+    return;
+  }
+  paper.textContent=text;
+  paper.style.fontFamily=document.getElementById("style").value;
+  paper.style.color=document.getElementById("ink").value;
+}
+function savePDF(){
+  makeNotes();
+  if(document.getElementById("noteText").value.trim()){
+    window.print();
+  }
+}
+function clearNotes(){
+  document.getElementById("noteText").value="";
+  document.getElementById("paper").textContent="Tumhare handwritten notes yahan dikhai denge...";
+}
+</script>
+</body>
+</html>
